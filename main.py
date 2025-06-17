@@ -19,11 +19,12 @@ image_url = content["url"]
 text = content["explanation"]
 
 image_path = "image.png"
-image_resspone = requests.get(image_url)
-with open(image_path, "wr") as image:
-    image.write(image_resspone.content)
+image_response = requests.get(image_url)
+
+with open(image_path, "wb") as file:
+    file.write(image_response.content)
 
 
 st.title(title)
-st.image(image)
+st.image(image_path)
 st.write(text)
