@@ -4,7 +4,6 @@ import requests
 import streamlit as st
 
 st.set_page_config(layout="wide")
-st.header("This is NASA's image of the day")
 
 API_KEY = os.getenv('NASA_API')
 
@@ -15,11 +14,16 @@ nasa_url = ("https://api.nasa.gov/planetary/apod?"
 response = requests.get(nasa_url)
 content = response.json()
 
+title = content["title"]
 image_url = content["url"]
 text = content["explanation"]
 
-image_res = requests.get(image_url)
-image = image_res.content
+image_path = "image.png"
+image_resspone = requests.get(image_url)
+with open(image_path, "wr") as image:
+    image.write(image_resspone.content)
 
+
+st.title(title)
 st.image(image)
 st.write(text)
